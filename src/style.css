@@ -26,6 +26,15 @@ li {
   width: 350px;
 }
 
+#add-item {
+  border: none;
+  font-style: italic;
+}
+
+#add-item::placeholder {
+  color: grey;
+}
+
 #clear-completed {
   color: grey;
   border: none;
