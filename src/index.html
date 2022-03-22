@@ -4,14 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/cf7c041e9c.js"
+      crossorigin="anonymous"
+    ></script>
     <title>TODOs</title>
   </head>
   <body>
     <div id="list-wrapper">
       <ul id="list-header">
-        <li>Today's To Do</li>
-        <li>
-          <input id="add-item" type="text" placeholder="Add to your list..." />
+        <li id="list-title">
+          <p>Today's To Do</p>
+          <i id="reload" class="fa-solid fa-arrows-rotate"></i>
+        </li>
+        <li id="new-item">
+          <input
+            id="add-item"
+            type="text"
+            placeholder="Add to your list..."
+          /><i id="add-icon" class="fa-solid fa-reply"></i>
         </li>
       </ul>
       <ul id="todo-items"></ul>

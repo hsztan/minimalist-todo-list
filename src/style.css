@@ -26,7 +26,26 @@ li {
   width: 350px;
 }
 
+li#list-title {
+  display: flex;
+}
+
+#reload {
+  color: #c1c1c1;
+  margin-left: auto;
+}
+
+#new-item {
+  display: flex;
+}
+
+#add-icon {
+  color: #c1c1c1;
+  margin-left: auto;
+}
+
 #add-item {
+  display: block;
   border: none;
   font-style: italic;
 }
