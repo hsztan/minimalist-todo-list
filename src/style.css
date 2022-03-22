@@ -52,6 +52,11 @@ li#list-title {
   display: block;
   border: none;
   font-style: italic;
+  width: 100%;
+}
+
+#add-item:focus-visible {
+  outline-style: none;
 }
 
 #add-item::placeholder {
