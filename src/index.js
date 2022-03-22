@@ -1,30 +1,9 @@
 import './style.css';
+import tasks from './modules/data';
 
 // Dom items
-const todoContainer = document.getElementById('todo-items');
-
-const tasks = [
-  {
-    description: 'take the dog to the vet',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'make todo list',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'shred top secret docs',
-    completed: false,
-    index: 3,
-  },
-  {
-    description: 'drink more coffee',
-    completed: false,
-    index: 4,
-  },
-];
+const todoContainerElem = document.getElementById('todo-items');
+const newItemElem = document.getElementById('add-item');
 
 const tripleDotHTML = `
   <div id="triple-dot">
@@ -34,7 +13,7 @@ const tripleDotHTML = `
   </div>
 `;
 
-window.onload = () => {
+const displayAll = () => {
   tasks.sort((a, b) => a.index - b.index);
   tasks.forEach((task) => {
     const listItem = document.createElement('li');
@@ -47,6 +26,15 @@ window.onload = () => {
     listItem.appendChild(checkBox);
     listItem.appendChild(textItem);
     listItem.insertAdjacentHTML('beforeend', tripleDotHTML);
-    todoContainer.appendChild(listItem);
+    todoContainerElem.appendChild(listItem);
   });
 };
+
+const addTask = (e) => {
+  if (e.key === 'Enter') {
+    console.log('pressed');
+  }
+};
+
+window.onload = displayAll;
+newItemElem.onkeyup = addTask;
