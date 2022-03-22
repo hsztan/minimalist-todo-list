@@ -1,5 +1,6 @@
 import './style.css';
 import tasks, { TASK_ID } from './modules/data';
+import data from './modules/data';
 
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
@@ -14,11 +15,23 @@ const tripleDotHTML = `
 `;
 
 const getCurrentTaskID = () => {
+  if (!tasks.length) return 0;
   tasks.sort((a, b) => a.index - b.index);
   return tasks.at(-1).index;
 };
 
-const getTasksFromLocalStorage = () => {};
+const getTasksFromLocalStorage = () => {
+  const stringTasks = localStorage.getItem('todo-tasks');
+  if (stringTasks) {
+    tasks.push(...JSON.parse(localStorage.getItem('todo-tasks')));
+  }
+};
+
+const saveTasksOnLocalStorage = () => {
+  console.log(tasks);
+  const stringifiedTasks = JSON.stringify(tasks);
+  localStorage.setItem('todo-tasks', stringifiedTasks);
+};
 
 const createTaskElem = (task) => {
   const listItem = document.createElement('li');
@@ -37,10 +50,10 @@ const createTaskElem = (task) => {
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
   todoContainerElem.appendChild(listItemElem);
-  console.log(task);
 };
 
 const displayAllTasks = () => {
+  getTasksFromLocalStorage();
   tasks.sort((a, b) => a.index - b.index);
   tasks.forEach((task) => {
     displayTaskElem(task);
@@ -56,6 +69,8 @@ const createTask = (keyPressed) => {
       completed: false,
       index: TASK_ID[0],
     };
+    tasks.push(task);
+    saveTasksOnLocalStorage();
     displayTaskElem(task);
   }
 };
