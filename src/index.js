@@ -37,8 +37,10 @@ const createTaskElem = (task) => {
   const listItem = document.createElement('li');
   listItem.classList.add('todo-item');
   const checkBox = document.createElement('input');
-  const textItem = document.createElement('p');
-  textItem.innerText = task.description;
+  const textItem = document.createElement('textarea');
+  textItem.classList.add('description');
+  textItem.value = task.description;
+  textItem.setAttribute('rows', '1');
   checkBox.type = 'checkbox';
   checkBox.classList.add('status');
   listItem.appendChild(checkBox);
