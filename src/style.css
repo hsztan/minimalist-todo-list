@@ -43,3 +43,29 @@ li {
   background-color: #f1f1f1;
   padding: 1rem;
 }
+
+.todo-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+#triple-dot {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: grey;
+}
+
+.status {
+  display: block;
+}
