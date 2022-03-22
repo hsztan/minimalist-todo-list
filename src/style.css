@@ -28,18 +28,22 @@ li {
 
 li#list-title {
   display: flex;
+  align-items: center;
 }
 
 #reload {
-  color: #c1c1c1;
+  font-size: 0.7rem;
   margin-left: auto;
+  color: #c1c1c1;
 }
 
 #new-item {
   display: flex;
+  align-items: center;
 }
 
 #add-icon {
+  font-size: 0.5rem;
   color: #c1c1c1;
   margin-left: auto;
 }
