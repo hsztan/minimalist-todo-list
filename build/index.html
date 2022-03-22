@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/cf7c041e9c.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>TODOs</title>
+  <script defer src="index.js"></script></head>
+  <body>
+    <div id="list-wrapper">
+      <ul id="list-header">
+        <li id="list-title">
+          <p>Today's To Do</p>
+          <i id="reload-icon" class="fa-solid fa-arrows-rotate"></i>
+        </li>
+        <li id="new-item">
+          <input
+            id="add-item"
+            type="text"
+            placeholder="Add to your list..."
+          /><i id="add-icon" class="fa-solid fa-reply"></i>
+        </li>
+      </ul>
+      <ul id="todo-items"></ul>
+      <button id="clear-completed" type="button">Clear all completed</button>
+    </div>
+  </body>
+</html>
