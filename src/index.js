@@ -32,6 +32,7 @@ const taskEnterKeyListener = (valueEle) => {
   valueEle.onkeyup = (keyPress) => {
     // TODO
     if (keyPress.key === 'Enter') {
+      keyPress.preventDefault();
       const idx = valueEle.dataset.index;
       const newValue = valueEle.value;
       updateTask(idx, newValue);
@@ -65,12 +66,11 @@ const createTaskElem = (task) => {
   // create checkbox
   const checkBox = document.createElement('input');
   // create item for description
-  const textItem = document.createElement('textarea');
+  const textItem = document.createElement('input');
   textItem.classList.add('description');
   // set task value
   textItem.value = task.description;
   textItem.dataset.index = task.index;
-  textItem.setAttribute('rows', '1');
   checkBox.type = 'checkbox';
   checkBox.classList.add('status');
   listItem.appendChild(checkBox);
