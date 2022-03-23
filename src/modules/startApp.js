@@ -13,6 +13,11 @@ const tripleDotHTML = `
   </div>
 `;
 
+const saveTasksOnLocalStorage = () => {
+  const stringifiedTasks = JSON.stringify(tasks);
+  localStorage.setItem('todo-tasks', stringifiedTasks);
+};
+
 const updateTask = (taskEle) => {
   if (taskEle) {
     const inputField = taskEle.children[1];
@@ -89,11 +94,6 @@ const getTasksFromLocalStorage = () => {
   if (stringTasks) {
     tasks.push(...JSON.parse(localStorage.getItem('todo-tasks')));
   }
-};
-
-const saveTasksOnLocalStorage = () => {
-  const stringifiedTasks = JSON.stringify(tasks);
-  localStorage.setItem('todo-tasks', stringifiedTasks);
 };
 
 const createTaskElem = (task) => {
