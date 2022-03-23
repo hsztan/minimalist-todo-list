@@ -37,8 +37,12 @@ const resetTasksIndexes = () => {
 
 // Remove task from array, localStorage and DOM
 // and reset all task Id's
-const deleteAndRemoveTask = (taskToRemoveEle, idx) => {
+const deleteAndRemoveTask = (e) => {
+  const taskToRemoveEle = e.target.parentElement.parentElement;
+  const inputField = taskToRemoveEle.children[1];
+  const idx = inputField.dataset.index;
   tasks.splice(idx - 1, 1);
+  console.log(taskToRemoveEle);
   taskToRemoveEle.remove();
   resetTasksIndexes();
   saveTasksOnLocalStorage();
@@ -54,9 +58,7 @@ const taskOnFocusListener = (taskEle) => {
     // Change icon to trash can
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     // Create event listener to delete item
-    iconContainer.onmousedown = () => {
-      deleteAndRemoveTask(taskEle, idx);
-    };
+    iconContainer.addEventListener('mousedown', deleteAndRemoveTask);
     iconContainer.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
   };
 };
@@ -72,6 +74,8 @@ const taskFocusOutListener = (taskEle) => {
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     iconContainer.innerHTML = tripleDotHTML;
     updateTask(taskEle);
+    // Remove delete eventListenr
+    iconContainer.removeEventListener('mousedown', deleteAndRemoveTask);
   });
 };
 
@@ -142,6 +146,7 @@ const displayAllTasks = () => {
 };
 
 const createTask = (event) => {
+  const eventType = event.constructor.name;
   if (eventType === 'PointerEvent' || event.key === 'Enter') {
     TASK_ID[0] = getCurrentTaskID();
     TASK_ID[0] += 1;
