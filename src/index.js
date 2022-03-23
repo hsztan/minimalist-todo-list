@@ -29,9 +29,9 @@ const resetTasksIndexes = () => {
   // select all task elements on DOM
   const tasksElems = document.querySelectorAll('.todo-item');
   tasks.forEach((task, i) => {
-    task.index = i;
-    tasksElems[i].id = `task-${i}`;
-    tasksElems[i].querySelector('.description').dataset.index = i;
+    task.index = i + 1;
+    tasksElems[i].id = `task-${i + 1}`;
+    tasksElems[i].querySelector('.description').dataset.index = i + 1;
   });
 };
 
@@ -76,7 +76,7 @@ const taskFocusOutListener = (taskEle) => {
 };
 
 const getCurrentTaskID = () => {
-  if (!tasks.length) return -1;
+  if (!tasks.length) return 0;
   tasks.sort((a, b) => a.index - b.index);
   return tasks.at(-1).index;
 };
@@ -130,7 +130,6 @@ const displayTaskElem = (task) => {
   todoContainerElem.appendChild(listItemElem);
   taskOnFocusListener(listItemElem);
   taskFocusOutListener(listItemElem);
-  // taskEnterKeyListener(listItemElem.children[1]);
 };
 
 const displayAllTasks = () => {
@@ -138,6 +137,7 @@ const displayAllTasks = () => {
   tasks.sort((a, b) => a.index - b.index);
   tasks.forEach((task) => {
     displayTaskElem(task);
+    console.log(task);
   });
 };
 
