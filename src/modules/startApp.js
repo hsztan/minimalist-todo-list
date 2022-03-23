@@ -3,6 +3,7 @@ import tasks, { TASK_ID } from './data';
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
 const newItemElem = document.getElementById('add-item');
+const addIconElem = document.getElementById('add-icon');
 
 const tripleDotHTML = `
   <div id="triple-dot">
@@ -140,8 +141,8 @@ const displayAllTasks = () => {
   });
 };
 
-const createTask = (keyPressed) => {
-  if (keyPressed.key === 'Enter') {
+const createTask = (event) => {
+  if (eventType === 'PointerEvent' || event.key === 'Enter') {
     TASK_ID[0] = getCurrentTaskID();
     TASK_ID[0] += 1;
     const task = {
@@ -159,4 +160,5 @@ const createTask = (keyPressed) => {
 export default () => {
   window.onload = displayAllTasks;
   newItemElem.onkeyup = createTask;
+  addIconElem.onclick = createTask;
 };
