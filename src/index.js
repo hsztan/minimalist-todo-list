@@ -15,7 +15,6 @@ const tripleDotHTML = `
 
 const updateTask = (idx, newValue) => {
   const task = tasks.find((task) => task.index === Number(idx));
-  console.log(task);
   task.description = newValue;
   saveTasksOnLocalStorage();
 };
@@ -24,7 +23,7 @@ const updateTask = (idx, newValue) => {
 const taskClickListener = (taskEle) => {
   taskEle.onclick = () => {
     console.log(taskEle);
-    // TODO
+    // Change icon to trash can
   };
 };
 
@@ -54,7 +53,6 @@ const getTasksFromLocalStorage = () => {
 };
 
 const saveTasksOnLocalStorage = () => {
-  console.log(tasks);
   const stringifiedTasks = JSON.stringify(tasks);
   localStorage.setItem('todo-tasks', stringifiedTasks);
 };
@@ -68,15 +66,20 @@ const createTaskElem = (task) => {
   // create item for description
   const textItem = document.createElement('input');
   textItem.classList.add('description');
+  // create container for action icon
+  const iconContainer = document.createElement('div');
+  iconContainer.classList.add('action-icon');
+  iconContainer.innerHTML = tripleDotHTML;
   // set task value
   textItem.value = task.description;
   textItem.dataset.index = task.index;
   checkBox.type = 'checkbox';
   checkBox.classList.add('status');
+  // append childs
   listItem.appendChild(checkBox);
   listItem.appendChild(textItem);
+  listItem.appendChild(iconContainer);
   // insert triple dot icon
-  listItem.insertAdjacentHTML('beforeend', tripleDotHTML);
   return listItem;
 };
 
@@ -104,6 +107,7 @@ const createTask = (keyPressed) => {
       completed: false,
       index: TASK_ID[0],
     };
+    newItemElem.value = '';
     tasks.push(task);
     saveTasksOnLocalStorage();
     displayTaskElem(task);
