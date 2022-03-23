@@ -19,15 +19,32 @@ const updateTask = (idx, newValue) => {
   saveTasksOnLocalStorage();
 };
 
-// Listener for click on task li
-const taskClickListener = (taskEle) => {
-  taskEle.onclick = () => {
-    const idx = taskEle.children[1].dataset.index;
+// Listener for ACTIVATING FOCUS ON TASK INPUT
+const taskOnFocusListener = (taskEle) => {
+  // Seelect input field to focus
+  const inputField = taskEle.children[1];
+  inputField.onfocus = () => {
+    const idx = inputField.dataset.index;
     // Change icon to trash can
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     iconContainer.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    console.log('Focused');
     //TODO
   };
+};
+
+// Listener LEAVING FOCUS ON TASK INPUT
+const taskFocusOutListener = (taskEle) => {
+  // Seelect input field to focus
+  const inputField = taskEle.children[1];
+  inputField.addEventListener('focusout', () => {
+    const idx = inputField.dataset.index;
+    // Change icon to trash can
+    const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
+    iconContainer.innerHTML = tripleDotHTML;
+    console.log('Focused out');
+    //TODO
+  });
 };
 
 const taskEnterKeyListener = (valueEle) => {
@@ -86,10 +103,12 @@ const createTaskElem = (task) => {
   return listItem;
 };
 
+// display task on DOM and ADD EVENT LISTENERS to TASK
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
   todoContainerElem.appendChild(listItemElem);
-  taskClickListener(listItemElem);
+  taskOnFocusListener(listItemElem);
+  taskFocusOutListener(listItemElem);
   taskEnterKeyListener(listItemElem.children[1]);
 };
 
