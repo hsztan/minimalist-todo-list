@@ -5,6 +5,7 @@ import checkStatus from './checkStatus';
 const todoContainerElem = document.getElementById('todo-items');
 const newItemElem = document.getElementById('add-item');
 const addIconElem = document.getElementById('add-icon');
+const resetCompletedElem = document.getElementById('reset-completed');
 
 const tripleDotHTML = `
   <div id="triple-dot">
@@ -153,6 +154,11 @@ const addTaskChangeStatusEvent = (listItemElem) => {
   divStatElem.onclick = changeTaskStatus;
 };
 
+// create event listener to clear all completed tasks
+const clearAllCompletedTasks = () => {
+  console.log('yellow');
+};
+
 //-----------------------------------------
 
 // display task on DOM and ADD EVENT LISTENERS to TASK
@@ -193,4 +199,5 @@ export default () => {
   window.onload = displayAllTasks;
   newItemElem.onkeyup = createTask;
   addIconElem.onclick = createTask;
+  resetCompletedElem.onclick = clearAllCompletedTasks;
 };

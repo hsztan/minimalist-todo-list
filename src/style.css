@@ -31,9 +31,12 @@ li#list-title {
   align-items: center;
 }
 
+#reset-completed {
+  margin-left: auto;
+}
+
 #reload-icon {
   font-size: 0.7rem;
-  margin-left: auto;
   color: #c1c1c1;
 }
 
