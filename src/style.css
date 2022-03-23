@@ -96,6 +96,10 @@ li#list-title {
   display: none;
 }
 
+.completed .status {
+  border: none;
+}
+
 .completed .status .check {
   display: block;
   color: blue;
