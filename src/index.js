@@ -14,7 +14,6 @@ const tripleDotHTML = `
 `;
 
 const updateTask = (taskEle) => {
-  //Check
   if (taskEle) {
     const inputField = taskEle.children[1];
     const newValue = inputField.value;
