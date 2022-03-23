@@ -19,6 +19,12 @@ const updateTask = (idx, newValue) => {
   saveTasksOnLocalStorage();
 };
 
+// Remove task from array, localStorage and DOM
+// and reset all task Id's
+const deleteAndRemoveTask = (taskToRemoveEle) => {
+  taskToRemoveEle.remove();
+};
+
 // Listener for ACTIVATING FOCUS ON TASK INPUT
 const taskOnFocusListener = (taskEle) => {
   // Seelect input field to focus
@@ -28,7 +34,12 @@ const taskOnFocusListener = (taskEle) => {
     taskEle.style.backgroundColor = '#fffed2';
     // Change icon to trash can
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
+    // Create event listener to delete item
+    iconContainer.onmousedown = () => {
+      deleteAndRemoveTask(taskEle);
+    };
     iconContainer.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
     //TODO
   };
 };
