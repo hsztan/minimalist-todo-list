@@ -156,7 +156,10 @@ const addTaskChangeStatusEvent = (listItemElem) => {
 
 // create event listener to clear all completed tasks
 const clearAllCompletedTasks = () => {
-  console.log('yellow');
+  const uncompletedTasks = tasks.filter((task) => !task.completed);
+  tasks.push(...uncompletedTasks);
+  saveTasksOnLocalStorage();
+  displayAllTasks();
 };
 
 //-----------------------------------------
