@@ -22,14 +22,16 @@ const updateTask = (idx, newValue) => {
 // Listener for click on task li
 const taskClickListener = (taskEle) => {
   taskEle.onclick = () => {
-    console.log(taskEle);
+    const idx = taskEle.children[1].dataset.index;
     // Change icon to trash can
+    const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
+    iconContainer.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    //TODO
   };
 };
 
 const taskEnterKeyListener = (valueEle) => {
   valueEle.onkeyup = (keyPress) => {
-    // TODO
     if (keyPress.key === 'Enter') {
       keyPress.preventDefault();
       const idx = valueEle.dataset.index;
@@ -60,6 +62,7 @@ const saveTasksOnLocalStorage = () => {
 const createTaskElem = (task) => {
   // create main list item
   const listItem = document.createElement('li');
+  listItem.id = `task-${task.index}`;
   listItem.classList.add('todo-item');
   // create checkbox
   const checkBox = document.createElement('input');
@@ -86,7 +89,7 @@ const createTaskElem = (task) => {
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
   todoContainerElem.appendChild(listItemElem);
-  taskClickListener(todoContainerElem);
+  taskClickListener(listItemElem);
   taskEnterKeyListener(listItemElem.children[1]);
 };
 
