@@ -133,7 +133,12 @@ const createTaskElem = (task) => {
 
 // change task status
 const changeTaskStatus = (e) => {
+  const idx = e.target.dataset.index;
+  const task = tasks[idx - 1];
+  task.completed = !task.completed;
+  e.target.classList.toggle('completed');
   console.log(e.target);
+  console.log(task);
 };
 
 // create event listener on checkbox and select task
