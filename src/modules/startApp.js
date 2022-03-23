@@ -105,9 +105,10 @@ const createTaskElem = (task) => {
   listItem.classList.add('todo-item');
   // create checkbox
   const checkBoxDiv = document.createElement('div');
+  checkBoxDiv.innerHTML = '<i class="check fa-solid fa-check"></i>';
   checkBoxDiv.classList.add('status');
   if (task.completed) {
-    checkBoxDiv.classList.add('completed');
+    listItem.classList.add('completed');
   }
   checkBoxDiv.dataset.index = task.index;
 
@@ -133,12 +134,17 @@ const createTaskElem = (task) => {
 
 // change task status
 const changeTaskStatus = (e) => {
-  const idx = e.target.dataset.index;
+  let divContainer = null;
+  if (e.target.dataset.index) {
+    divContainer = e.target;
+  } else {
+    divContainer = e.target.parentElement;
+  }
+  const idx = divContainer.dataset.index;
   const task = tasks[idx - 1];
   task.completed = !task.completed;
-  e.target.classList.toggle('completed');
-  console.log(e.target);
-  console.log(task);
+  divContainer.parentElement.classList.toggle('completed');
+  saveTasksOnLocalStorage();
 };
 
 // create event listener on checkbox and select task
