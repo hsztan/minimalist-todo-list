@@ -96,6 +96,7 @@ const saveTasksOnLocalStorage = () => {
 const createTaskElem = (task) => {
   // create main list item
   const listItem = document.createElement('li');
+  listItem.setAttribute('draggable', true);
   listItem.id = `task-${task.index}`;
   listItem.classList.add('todo-item');
   // create checkbox
