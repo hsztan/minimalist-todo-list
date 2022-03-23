@@ -13,16 +13,36 @@ const tripleDotHTML = `
   </div>
 `;
 
-const updateTask = (idx, newValue) => {
-  const task = tasks.find((task) => task.index === Number(idx));
-  task.description = newValue;
-  saveTasksOnLocalStorage();
+const updateTask = (taskEle) => {
+  //Check
+  if (taskEle) {
+    const inputField = taskEle.children[1];
+    const newValue = inputField.value;
+    const idx = inputField.dataset.index;
+    const task = tasks.find((task) => task.index === Number(idx));
+    if (!task) return;
+    task.description = newValue;
+    saveTasksOnLocalStorage();
+  }
+};
+
+const resetTasksIndexes = () => {
+  // select all task elements on DOM
+  const tasksElems = document.querySelectorAll('.todo-item');
+  tasks.forEach((task, i) => {
+    task.index = i;
+    tasksElems[i].id = `task-${i}`;
+    tasksElems[i].querySelector('.description').dataset.index = i;
+  });
 };
 
 // Remove task from array, localStorage and DOM
 // and reset all task Id's
-const deleteAndRemoveTask = (taskToRemoveEle) => {
+const deleteAndRemoveTask = (taskToRemoveEle, idx) => {
+  tasks.splice(idx, 1);
   taskToRemoveEle.remove();
+  resetTasksIndexes();
+  saveTasksOnLocalStorage();
 };
 
 // Listener for ACTIVATING FOCUS ON TASK INPUT
@@ -36,11 +56,9 @@ const taskOnFocusListener = (taskEle) => {
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     // Create event listener to delete item
     iconContainer.onmousedown = () => {
-      deleteAndRemoveTask(taskEle);
+      deleteAndRemoveTask(taskEle, idx);
     };
     iconContainer.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-
-    //TODO
   };
 };
 
@@ -54,24 +72,12 @@ const taskFocusOutListener = (taskEle) => {
     // Change back icon to triple dot
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     iconContainer.innerHTML = tripleDotHTML;
-    updateTask(idx, inputField.value);
-    //TODO
+    updateTask(taskEle);
   });
 };
 
-// const taskEnterKeyListener = (valueEle) => {
-//   valueEle.onkeyup = (keyPress) => {
-//     if (keyPress.key === 'Enter') {
-//       keyPress.preventDefault();
-//       const idx = valueEle.dataset.index;
-//       const newValue = valueEle.value;
-//       updateTask(idx, newValue);
-//     }
-//   };
-// };
-
 const getCurrentTaskID = () => {
-  if (!tasks.length) return 0;
+  if (!tasks.length) return -1;
   tasks.sort((a, b) => a.index - b.index);
   return tasks.at(-1).index;
 };
