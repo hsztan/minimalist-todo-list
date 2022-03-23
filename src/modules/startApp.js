@@ -1,4 +1,5 @@
 import tasks, { TASK_ID } from './data';
+import checkStatus from './checkStatus';
 
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
@@ -104,11 +105,11 @@ const createTaskElem = (task) => {
   listItem.classList.add('todo-item');
   // create checkbox
   const checkBoxDiv = document.createElement('div');
-  checkBoxDiv.classList.add('status-container');
-  const checkBox = document.createElement('input');
-  checkBox.type = 'checkbox';
-  checkBox.classList.add('status');
-  checkBoxDiv.appendChild(checkBox);
+  checkBoxDiv.classList.add('status');
+  if (task.completed) {
+    checkBoxDiv.classList.add('completed');
+  }
+  checkBoxDiv.dataset.index = task.index;
 
   // create item for description
   const textItem = document.createElement('input');
@@ -128,12 +129,28 @@ const createTaskElem = (task) => {
   return listItem;
 };
 
+//-----------------------------------------
+
+// change task status
+const changeTaskStatus = (e) => {
+  console.log(e.target);
+};
+
+// create event listener on checkbox and select task
+const addTaskChangeStatusEvent = (listItemElem) => {
+  const divStatElem = listItemElem.querySelector('.status');
+  divStatElem.onclick = changeTaskStatus;
+};
+
+//-----------------------------------------
+
 // display task on DOM and ADD EVENT LISTENERS to TASK
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
   todoContainerElem.appendChild(listItemElem);
   taskOnFocusListener(listItemElem);
   taskFocusOutListener(listItemElem);
+  addTaskChangeStatusEvent(listItemElem);
 };
 
 const displayAllTasks = () => {

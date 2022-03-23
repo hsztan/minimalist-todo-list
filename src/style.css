@@ -84,8 +84,9 @@ li#list-title {
   background: transparent;
 }
 
-.status-container {
-  height: 100%;
+.status {
+  height: 1.2rem;
+  width: 1.2rem;
   background-color: transparent;
   border: 2px solid #c1c1c1;
   border-radius: 3px;
@@ -114,9 +115,4 @@ li#list-title {
   height: 4px;
   border-radius: 50%;
   background-color: #c1c1c1;
-}
-
-.status {
-  display: block;
-  opacity: 0;
 }
