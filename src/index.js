@@ -43,20 +43,21 @@ const taskFocusOutListener = (taskEle) => {
     // Change back icon to triple dot
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     iconContainer.innerHTML = tripleDotHTML;
+    updateTask(idx, inputField.value);
     //TODO
   });
 };
 
-const taskEnterKeyListener = (valueEle) => {
-  valueEle.onkeyup = (keyPress) => {
-    if (keyPress.key === 'Enter') {
-      keyPress.preventDefault();
-      const idx = valueEle.dataset.index;
-      const newValue = valueEle.value;
-      updateTask(idx, newValue);
-    }
-  };
-};
+// const taskEnterKeyListener = (valueEle) => {
+//   valueEle.onkeyup = (keyPress) => {
+//     if (keyPress.key === 'Enter') {
+//       keyPress.preventDefault();
+//       const idx = valueEle.dataset.index;
+//       const newValue = valueEle.value;
+//       updateTask(idx, newValue);
+//     }
+//   };
+// };
 
 const getCurrentTaskID = () => {
   if (!tasks.length) return 0;
@@ -113,7 +114,7 @@ const displayTaskElem = (task) => {
   todoContainerElem.appendChild(listItemElem);
   taskOnFocusListener(listItemElem);
   taskFocusOutListener(listItemElem);
-  taskEnterKeyListener(listItemElem.children[1]);
+  // taskEnterKeyListener(listItemElem.children[1]);
 };
 
 const displayAllTasks = () => {
