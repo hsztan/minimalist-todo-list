@@ -42,7 +42,6 @@ const deleteAndRemoveTask = (e) => {
   const inputField = taskToRemoveEle.children[1];
   const idx = inputField.dataset.index;
   tasks.splice(idx - 1, 1);
-  console.log(taskToRemoveEle);
   taskToRemoveEle.remove();
   resetTasksIndexes();
   saveTasksOnLocalStorage();
