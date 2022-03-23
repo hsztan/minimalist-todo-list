@@ -80,6 +80,17 @@ li#list-title {
   gap: 0.5rem;
 }
 
+.todo-item > * {
+  background: transparent;
+}
+
+.status-container {
+  height: 100%;
+  background-color: transparent;
+  border: 2px solid #c1c1c1;
+  border-radius: 3px;
+}
+
 .description {
   font-family: Arial, Helvetica, sans-serif;
   width: 100%;
@@ -107,4 +118,5 @@ li#list-title {
 
 .status {
   display: block;
+  opacity: 0;
 }

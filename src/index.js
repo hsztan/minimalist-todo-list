@@ -25,10 +25,10 @@ const taskOnFocusListener = (taskEle) => {
   const inputField = taskEle.children[1];
   inputField.onfocus = () => {
     const idx = inputField.dataset.index;
+    taskEle.style.backgroundColor = '#fffed2';
     // Change icon to trash can
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
-    iconContainer.innerHTML = '<i class="fa-solid fa-trash"></i>';
-    console.log('Focused');
+    iconContainer.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
     //TODO
   };
 };
@@ -39,10 +39,10 @@ const taskFocusOutListener = (taskEle) => {
   const inputField = taskEle.children[1];
   inputField.addEventListener('focusout', () => {
     const idx = inputField.dataset.index;
-    // Change icon to trash can
+    taskEle.style.backgroundColor = '#fff';
+    // Change back icon to triple dot
     const iconContainer = document.querySelector(`#task-${idx} .action-icon`);
     iconContainer.innerHTML = tripleDotHTML;
-    console.log('Focused out');
     //TODO
   });
 };
@@ -82,7 +82,13 @@ const createTaskElem = (task) => {
   listItem.id = `task-${task.index}`;
   listItem.classList.add('todo-item');
   // create checkbox
+  const checkBoxDiv = document.createElement('div');
+  checkBoxDiv.classList.add('status-container');
   const checkBox = document.createElement('input');
+  checkBox.type = 'checkbox';
+  checkBox.classList.add('status');
+  checkBoxDiv.appendChild(checkBox);
+
   // create item for description
   const textItem = document.createElement('input');
   textItem.classList.add('description');
@@ -93,10 +99,8 @@ const createTaskElem = (task) => {
   // set task value
   textItem.value = task.description;
   textItem.dataset.index = task.index;
-  checkBox.type = 'checkbox';
-  checkBox.classList.add('status');
   // append childs
-  listItem.appendChild(checkBox);
+  listItem.appendChild(checkBoxDiv);
   listItem.appendChild(textItem);
   listItem.appendChild(iconContainer);
   // insert triple dot icon
