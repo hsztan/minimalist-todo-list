@@ -169,7 +169,7 @@ const displayTaskElem = (task) => {
   addTaskChangeStatusEvent(listItemElem);
   // testing on drag end
   listItemElem.ondragstart = (ev) => {
-    ev.dataTransfer.setData('text', ev.target.id);
+    ev.dataTransfer.setData('id', ev.target.id);
   };
 };
 
@@ -214,16 +214,6 @@ const createTask = (event) => {
     saveTasksOnLocalStorage();
     displayTaskElem(task);
   }
-};
-
-todoContainerElem.ondragover = (ev) => ev.preventDefault();
-todoContainerElem.ondrop = (ev) => {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData('text');
-  console.log(ev.target);
-  const listElemToDrop = document.getElementById(data);
-  console.log(listElemToDrop);
-  // todoContainerElem.insertBefore(listElemToDrop, todoContainerElem.children[2]);
 };
 
 export default () => {
