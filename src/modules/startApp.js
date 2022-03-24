@@ -37,8 +37,11 @@ const resetTasksIndexes = () => {
   tasks.forEach((task, i) => {
     task.index = i + 1;
     tasksElems[i].id = `task-${i + 1}`;
+    tasksElems[i].dataset.index = i + 1;
     tasksElems[i].querySelector('.status').dataset.index = i + 1;
     tasksElems[i].querySelector('.description').dataset.index = i + 1;
+    tasksElems[i].querySelector('.action-icon').dataset.index = i + 1;
+    tasksElems[i].querySelector('#triple-dot').dataset.index = i + 1;
   });
 };
 
@@ -104,6 +107,7 @@ const createTaskElem = (task) => {
   listItem.setAttribute('draggable', true);
   listItem.id = `task-${task.index}`;
   listItem.classList.add('todo-item');
+  listItem.dataset.index = task.index;
   // create checkbox
   const checkBoxDiv = document.createElement('div');
   checkBoxDiv.innerHTML = '<i class="check fa-solid fa-check"></i>';
@@ -119,7 +123,9 @@ const createTaskElem = (task) => {
   // create container for action icon
   const iconContainer = document.createElement('div');
   iconContainer.classList.add('action-icon');
+  iconContainer.dataset.index = task.index;
   iconContainer.innerHTML = tripleDotHTML;
+  // iconContainer.firstChild.dataset.index = task.index;
   // set task value
   textItem.value = task.description;
   textItem.dataset.index = task.index;
@@ -161,6 +167,10 @@ const displayTaskElem = (task) => {
   taskOnFocusListener(listItemElem);
   taskFocusOutListener(listItemElem);
   addTaskChangeStatusEvent(listItemElem);
+  // testing on drag end
+  listItemElem.ondragstart = (ev) => {
+    ev.dataTransfer.setData('text', ev.target.id);
+  };
 };
 
 const displayAllTasks = () => {
@@ -204,6 +214,16 @@ const createTask = (event) => {
     saveTasksOnLocalStorage();
     displayTaskElem(task);
   }
+};
+
+todoContainerElem.ondragover = (ev) => ev.preventDefault();
+todoContainerElem.ondrop = (ev) => {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData('text');
+  console.log(ev.target);
+  const listElemToDrop = document.getElementById(data);
+  console.log(listElemToDrop);
+  // todoContainerElem.insertBefore(listElemToDrop, todoContainerElem.children[2]);
 };
 
 export default () => {
