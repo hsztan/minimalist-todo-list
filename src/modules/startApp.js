@@ -169,7 +169,7 @@ const displayTaskElem = (task) => {
   addTaskChangeStatusEvent(listItemElem);
   // testing on drag end
   listItemElem.ondragstart = (ev) => {
-    ev.dataTransfer.setData('text', ev.target.id);
+    ev.dataTransfer.setData('id', ev.target.id);
   };
 };
 
@@ -219,10 +219,22 @@ const createTask = (event) => {
 todoContainerElem.ondragover = (ev) => ev.preventDefault();
 todoContainerElem.ondrop = (ev) => {
   ev.preventDefault();
-  const data = ev.dataTransfer.getData('text');
-  console.log(ev.target);
+  const data = ev.dataTransfer.getData('id');
+  const targetIdx = ev.target.dataset.index;
   const listElemToDrop = document.getElementById(data);
-  console.log(listElemToDrop);
+  if (targetIdx && listElemToDrop.dataset.index !== targetIdx) {
+    console.log('may drop target');
+    todoContainerElem.insertBefore(
+      listElemToDrop,
+      todoContainerElem.children[targetIdx]
+    );
+    resetTasksIndexes();
+    console.log(tasks);
+  } else {
+    //top and bottom
+  }
+  // insert new position of element
+  // update id's
   // todoContainerElem.insertBefore(listElemToDrop, todoContainerElem.children[2]);
 };
 
