@@ -1,5 +1,4 @@
 import tasks, { TASK_ID } from './data';
-import checkStatus from './checkStatus';
 
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
@@ -38,6 +37,7 @@ const resetTasksIndexes = () => {
   tasks.forEach((task, i) => {
     task.index = i + 1;
     tasksElems[i].id = `task-${i + 1}`;
+    tasksElems[i].querySelector('.status').dataset.index = i + 1;
     tasksElems[i].querySelector('.description').dataset.index = i + 1;
   });
 };
@@ -154,16 +154,6 @@ const addTaskChangeStatusEvent = (listItemElem) => {
   divStatElem.onclick = changeTaskStatus;
 };
 
-// create event listener to clear all completed tasks
-const clearAllCompletedTasks = () => {
-  const uncompletedTasks = tasks.filter((task) => !task.completed);
-  tasks.push(...uncompletedTasks);
-  saveTasksOnLocalStorage();
-  displayAllTasks();
-};
-
-//-----------------------------------------
-
 // display task on DOM and ADD EVENT LISTENERS to TASK
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
@@ -175,11 +165,29 @@ const displayTaskElem = (task) => {
 
 const displayAllTasks = () => {
   getTasksFromLocalStorage();
-  tasks.sort((a, b) => a.index - b.index);
-  tasks.forEach((task) => {
+  tasks.forEach((task, i) => {
+    task.index = i + 1;
     displayTaskElem(task);
   });
+  // resetTasksIndexes();
 };
+
+const removeAllTasksFromDom = () => {
+  todoContainerElem.innerHTML = '';
+};
+
+// create event listener to clear all completed tasks
+const clearAllCompletedTasks = () => {
+  const uncompletedTasks = tasks.filter((task) => !task.completed);
+  tasks.splice(0, tasks.length);
+  tasks.push(...uncompletedTasks);
+  saveTasksOnLocalStorage();
+  tasks.splice(0, tasks.length);
+  removeAllTasksFromDom();
+  displayAllTasks();
+};
+
+//-----------------------------------------
 
 const createTask = (event) => {
   const eventType = event.constructor.name;
