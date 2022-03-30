@@ -1,4 +1,4 @@
-import tasks, { TASK_ID } from './data';
+const { TASK_ID, tasks } = require('./data');
 
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
@@ -12,7 +12,7 @@ const tripleDotHTML = `
   </div>
 `;
 
-export const saveTasksOnLocalStorage = () => {
+const saveTasksOnLocalStorage = () => {
   const stringifiedTasks = JSON.stringify(tasks);
   localStorage.setItem('todo-tasks', stringifiedTasks);
 };
@@ -30,12 +30,12 @@ const getCurrentTaskID = () => {
   return tasks.at(-1).index;
 };
 
-export const removeAllTasksFromDom = () => {
+const removeAllTasksFromDom = () => {
   const todoContainerElem = document.getElementById('todo-items');
   todoContainerElem.innerHTML = '';
 };
 
-export const updateTask = (taskEle) => {
+const updateTask = (taskEle) => {
   if (taskEle) {
     const inputField = taskEle.children[1];
     const newValue = inputField.value;
@@ -47,7 +47,7 @@ export const updateTask = (taskEle) => {
   }
 };
 
-export const resetTasksIndexes = () => {
+const resetTasksIndexes = () => {
   // select all task elements on DOM
   const tasksElems = document.querySelectorAll('.todo-item');
   tasks.forEach((task, i) => {
@@ -63,7 +63,7 @@ export const resetTasksIndexes = () => {
 
 // Remove task from array, localStorage and DOM
 // and reset all task Id's
-export const deleteAndRemoveTask = (e) => {
+const deleteAndRemoveTask = (e) => {
   const taskToRemoveEle = e.target.parentElement.parentElement;
   const inputField = taskToRemoveEle.children[1];
   const idx = inputField.dataset.index;
@@ -157,7 +157,7 @@ const changeTaskStatus = (e) => {
 };
 
 // create event listener on checkbox and select task
-export const addTaskChangeStatusEvent = (listItemElem) => {
+const addTaskChangeStatusEvent = (listItemElem) => {
   const divStatElem = listItemElem.querySelector('.status');
   divStatElem.onclick = changeTaskStatus;
 };
@@ -175,7 +175,7 @@ const displayTaskElem = (task) => {
   };
 };
 
-export const displayAllTasks = () => {
+const displayAllTasks = () => {
   getTasksFromLocalStorage();
   tasks.forEach((task, i) => {
     task.index = i + 1;
@@ -185,7 +185,7 @@ export const displayAllTasks = () => {
 };
 
 // create event listener to clear all completed tasks
-export const clearAllCompletedTasks = () => {
+const clearAllCompletedTasks = () => {
   const uncompletedTasks = tasks.filter((task) => !task.completed);
   tasks.splice(0, tasks.length);
   tasks.push(...uncompletedTasks);
@@ -197,7 +197,7 @@ export const clearAllCompletedTasks = () => {
 
 // ------------- EVENT LISTENERS ---------- //
 
-export const createTask = (event) => {
+const createTask = (event) => {
   const eventType = event.constructor.name;
   if (eventType === 'PointerEvent' || event.key === 'Enter') {
     TASK_ID[0] = getCurrentTaskID();
@@ -212,4 +212,16 @@ export const createTask = (event) => {
     saveTasksOnLocalStorage();
     displayTaskElem(task);
   }
+};
+
+module.exports = {
+  createTask,
+  clearAllCompletedTasks,
+  displayAllTasks,
+  addTaskChangeStatusEvent,
+  deleteAndRemoveTask,
+  resetTasksIndexes,
+  saveTasksOnLocalStorage,
+  removeAllTasksFromDom,
+  updateTask,
 };

@@ -1,4 +1,4 @@
-import './style.css';
-import startApp from './modules/startApp';
+require('./style.css');
+const { startApp } = require('./modules/startApp');
 
 startApp();
