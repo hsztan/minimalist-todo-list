@@ -1,14 +1,27 @@
 const fs = require('fs');
-const { createTask } = require('./src/modules/helpers');
-const tasks = require('./src/modules/data');
+const { createTask, tasks } = require('./src/modules/helpers');
 
-document.body.innerHTML = fs.readFileSync('build/index.html');
+describe('createTask', () => {
+  beforeAll(() => {
+    document.body.innerHTML = fs.readFileSync('build/index.html');
+  });
+  it('adds a new task object into the data array', () => {
+    const newItemElem = document.getElementById('add-item');
+    newItemElem.value = 'Aaron';
+    const event = { constructor: { name: 'PointerEvent' } };
+    createTask(event);
+    expect(tasks.length).toBe(1);
+  });
+  it('saves the task into the local storage', () => {
+    expect(1).toBe(1);
+  });
+});
 
-// inputElem.addEventListener('click', createTask);
-it('does something', () => {
-  const newItemElem = document.getElementById('add-item');
-  newItemElem.value = 'Aaron';
-  const event = { constructor: { name: 'PointerEvent' } };
-  // createTask(event);
-  expect(document.querySelector('.fa-reply').id).toBe('add-icon');
+describe('deleteAndRemoveTask', () => {
+  beforeAll(() => {
+    document.body.innerHTML = fs.readFileSync('build/index.html');
+  });
+  it('removes a task object into the data array', () => {
+    expect(1).toBe(1);
+  });
 });

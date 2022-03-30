@@ -1,8 +1,5 @@
 const { TASK_ID, tasks } = require('./data');
 
-// Dom items
-const todoContainerElem = document.getElementById('todo-items');
-
 const tripleDotHTML = `
   <div id="triple-dot">
     <div class="dot"></div>
@@ -164,6 +161,8 @@ const addTaskChangeStatusEvent = (listItemElem) => {
 // display task on DOM and ADD EVENT LISTENERS to TASK
 const displayTaskElem = (task) => {
   const listItemElem = createTaskElem(task);
+  // ADDED FOR TESTS
+  const todoContainerElem = document.getElementById('todo-items');
   todoContainerElem.appendChild(listItemElem);
   taskOnFocusListener(listItemElem);
   taskFocusOutListener(listItemElem);
@@ -215,6 +214,8 @@ const createTask = (event) => {
 };
 
 module.exports = {
+  tasks,
+  TASK_ID,
   createTask,
   clearAllCompletedTasks,
   displayAllTasks,
