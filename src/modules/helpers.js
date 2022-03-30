@@ -2,7 +2,6 @@ const { TASK_ID, tasks } = require('./data');
 
 // Dom items
 const todoContainerElem = document.getElementById('todo-items');
-const newItemElem = document.getElementById('add-item');
 
 const tripleDotHTML = `
   <div id="triple-dot">
@@ -198,6 +197,7 @@ const clearAllCompletedTasks = () => {
 // ------------- EVENT LISTENERS ---------- //
 
 const createTask = (event) => {
+  const newItemElem = document.getElementById('add-item');
   const eventType = event.constructor.name;
   if (eventType === 'PointerEvent' || event.key === 'Enter') {
     TASK_ID[0] = getCurrentTaskID();
