@@ -1,5 +1,9 @@
 const fs = require('fs');
-const { createTask, tasks, deleteAndRemoveTask } = require('./src/modules/helpers');
+const {
+  createTask,
+  tasks,
+  deleteAndRemoveTask,
+} = require('./src/modules/helpers');
 
 describe('createTask', () => {
   beforeAll(() => {
@@ -10,11 +14,11 @@ describe('createTask', () => {
     newItemElem.value = 'Aaron';
     const event = { constructor: { name: 'PointerEvent' } };
     createTask(event);
-  })
+  });
   afterEach(() => {
     tasks.splice(0);
     localStorage.clear();
-  })
+  });
   it('adds a new task object into the data array', () => {
     expect(tasks.length).toBe(1);
   });
@@ -23,7 +27,7 @@ describe('createTask', () => {
   });
   it('renders task on the DOM', () => {
     expect(document.querySelector('.todo-item')).toBeTruthy();
-  })
+  });
 });
 
 describe('deleteAndRemoveTask', () => {
@@ -37,7 +41,7 @@ describe('deleteAndRemoveTask', () => {
     createTask(event);
     const e = { target: document.getElementById('triple-dot') };
     deleteAndRemoveTask(e);
-  })
+  });
   it('removes a task object out of the data array', () => {
     expect(tasks.length).toBe(0);
   });
