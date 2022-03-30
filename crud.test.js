@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { createTask, tasks } = require('./src/modules/helpers');
+const { createTask, tasks, deleteAndRemoveTask } = require('./src/modules/helpers');
 
 describe('createTask', () => {
   beforeAll(() => {
@@ -30,7 +30,21 @@ describe('deleteAndRemoveTask', () => {
   beforeAll(() => {
     document.body.innerHTML = fs.readFileSync('build/index.html');
   });
-  it('removes a task object into the data array', () => {
-    expect(1).toBe(1);
+  beforeEach(() => {
+    const newItemElem = document.getElementById('add-item');
+    newItemElem.value = 'Aaron';
+    const event = { constructor: { name: 'PointerEvent' } };
+    createTask(event);
+    const e = { target: document.getElementById('triple-dot') };
+    deleteAndRemoveTask(e);
+  })
+  it('removes a task object out of the data array', () => {
+    expect(tasks.length).toBe(0);
+  });
+  it('checks to see if the added todo item is removed from local storage', () => {
+    expect(localStorage['todo-tasks']).toBe('[]');
+  });
+  it('checks to see if the added toto task was removed from the dom', () => {
+    expect(document.querySelector('.todo-item')).toBeFalsy();
   });
 });
