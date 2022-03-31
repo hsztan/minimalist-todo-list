@@ -59,22 +59,29 @@ describe('updateTask', () => {
     document.body.innerHTML = fs.readFileSync('build/index.html');
   });
   beforeEach(() => {
+    // create task
     const newItemElem = document.getElementById('add-item');
     newItemElem.value = 'Henry';
     const event = { constructor: { name: 'PointerEvent' } };
     createTask(event);
-  });
-  it('$$$$$$$', () => {
+    // update Task
     const todoElement = document.querySelector('.todo-item');
     const expectedValue = 'You are cool';
     todoElement.children[1].value = expectedValue;
     updateTask(todoElement);
+  });
+  it('Updated DOM input value is stored in the data array', () => {
+    const expectedValue = 'You are cool';
     expect(tasks.at(0).description).toBe(expectedValue);
   });
-  // it('checks to see if the added todo item is removed from local storage', () => {
-  //   expect(localStorage['todo-tasks']).toBe('[]');
-  // });
-  // it('checks to see if the added toto task was removed from the dom', () => {
-  //   expect(document.querySelector('.todo-item')).toBeFalsy();
-  // });
+  it('Value is updated with a new value', () => {
+    const inputElement = document.querySelector('.description');
+    expect(tasks.at(0).description).toBe(inputElement.value);
+  });
+  it('Local Storage has updated value', () => {
+    const expectedValue = 'You are cool';
+    const tasksFromStorage = JSON.parse(localStorage.getItem('todo-tasks'));
+    const updatedValue = tasksFromStorage[0].description;
+    expect(updatedValue).toBe(expectedValue);
+  });
 });
