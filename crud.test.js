@@ -5,7 +5,16 @@ const {
   deleteAndRemoveTask,
   updateTask,
   changeTaskStatus,
+  clearAllCompletedTasks,
 } = require('./src/modules/helpers');
+
+const createTaskforTest = (task) => {
+  const newItemElem = document.getElementById('add-item');
+  newItemElem.value = task;
+  const event = { constructor: { name: 'PointerEvent' } };
+  createTask(event);
+  return newItemElem;
+};
 
 describe('createTask', () => {
   beforeAll(() => {
@@ -74,7 +83,7 @@ describe('updateTask', () => {
   afterEach(() => {
     const e = { target: document.getElementById('triple-dot') };
     deleteAndRemoveTask(e);
-  })
+  });
   it('Updated DOM input value is stored in the data array', () => {
     const expectedValue = 'You are cool';
     expect(tasks.at(0).description).toBe(expectedValue);
@@ -109,7 +118,7 @@ describe('changeTaskStatus', () => {
   afterEach(() => {
     const e = { target: document.getElementById('triple-dot') };
     deleteAndRemoveTask(e);
-  })
+  });
   it('Task completion value is toggled in local memory', () => {
     expect(tasks.at(0).completed).toBe(true);
   });
@@ -136,3 +145,54 @@ describe('changeTaskStatus', () => {
   });
 });
 
+describe('clearAllCompletedTasks', () => {
+  beforeAll(() => {
+    document.body.innerHTML = fs.readFileSync('build/index.html');
+  });
+  beforeEach(() => {
+    // create task
+    createTaskforTest('Take dog to vet');
+    createTaskforTest('Go to see Batman');
+    // mark first task as completed
+    const todoElement = document.querySelector('.todo-item');
+    const e = { target: todoElement.children[0] };
+    changeTaskStatus(e);
+    // clear completed tasks
+    clearAllCompletedTasks();
+  });
+  afterEach(() => {
+    const e = { target: document.getElementById('triple-dot') };
+    deleteAndRemoveTask(e);
+  });
+  it('First completed task is cleared from DOM', () => {
+    const taskElements = document.querySelectorAll('.todo-item');
+    expect(taskElements).toHaveLength(1);
+  });
+  it('Completed task is removed from local memory', () => {
+    const expectedValue = 'Go to see Batman';
+    expect(tasks.at(0).description).toBe(expectedValue);
+  });
+  it('Completed task is removed from local storage', () => {
+    const expectedValue = 'Go to see Batman';
+    const tasksFromStorage = JSON.parse(localStorage.getItem('todo-tasks'));
+    const updatedValue = tasksFromStorage[0].description;
+    expect(updatedValue).toBe(expectedValue);
+  });
+  it('Only incomplete items remain after calling function', () => {
+    const todos = [
+      'Buy shampoo',
+      'Eat laundry',
+      'Take lizard on a walk',
+      'Buy time',
+      'Take doctor to vet',
+      "Change lawyer's diapers",
+      'Buy the ocean',
+    ];
+    todos.forEach((todo) => {
+      createTaskforTest(todo);
+    });
+    clearAllCompletedTasks();
+    const allAreIncomplete = tasks.every((task) => !task.completed);
+    expect(allAreIncomplete).toBe(true);
+  });
+});
