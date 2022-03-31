@@ -4,6 +4,7 @@ const {
   tasks,
   deleteAndRemoveTask,
   updateTask,
+  changeTaskStatus,
 } = require('./src/modules/helpers');
 
 describe('createTask', () => {
@@ -70,6 +71,10 @@ describe('updateTask', () => {
     todoElement.children[1].value = expectedValue;
     updateTask(todoElement);
   });
+  afterEach(() => {
+    const e = { target: document.getElementById('triple-dot') };
+    deleteAndRemoveTask(e);
+  })
   it('Updated DOM input value is stored in the data array', () => {
     const expectedValue = 'You are cool';
     expect(tasks.at(0).description).toBe(expectedValue);
@@ -85,3 +90,49 @@ describe('updateTask', () => {
     expect(updatedValue).toBe(expectedValue);
   });
 });
+
+describe('changeTaskStatus', () => {
+  beforeAll(() => {
+    document.body.innerHTML = fs.readFileSync('build/index.html');
+  });
+  beforeEach(() => {
+    // create task
+    const newItemElem = document.getElementById('add-item');
+    newItemElem.value = 'Laundry';
+    const event = { constructor: { name: 'PointerEvent' } };
+    createTask(event);
+    // update Task
+    const todoElement = document.querySelector('.todo-item');
+    const e = { target: todoElement.children[0] };
+    changeTaskStatus(e);
+  });
+  afterEach(() => {
+    const e = { target: document.getElementById('triple-dot') };
+    deleteAndRemoveTask(e);
+  })
+  it('Task completion value is toggled in local memory', () => {
+    expect(tasks.at(0).completed).toBe(true);
+  });
+  it('Task completion value is toggled in local storage', () => {
+    const tasksFromStorage = JSON.parse(localStorage.getItem('todo-tasks'));
+    const completion = tasksFromStorage[0].completed;
+    expect(completion).toBe(true);
+  });
+  it('Task toggles completion back to false in memory when ran again', () => {
+    // update Task to not completed
+    const todoElement = document.querySelector('.todo-item');
+    const e = { target: todoElement.children[0] };
+    changeTaskStatus(e);
+    expect(tasks.at(0).completed).toBe(false);
+  });
+  it('Task toggles completion back to false in local Storage when ran again', () => {
+    // update Task to not completed
+    const todoElement = document.querySelector('.todo-item');
+    const e = { target: todoElement.children[0] };
+    changeTaskStatus(e);
+    const tasksFromStorage = JSON.parse(localStorage.getItem('todo-tasks'));
+    const completion = tasksFromStorage[0].completed;
+    expect(completion).toBe(false);
+  });
+});
+

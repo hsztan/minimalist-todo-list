@@ -225,4 +225,5 @@ module.exports = {
   saveTasksOnLocalStorage,
   removeAllTasksFromDom,
   updateTask,
+  changeTaskStatus,
 };
