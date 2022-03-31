@@ -28,6 +28,10 @@ To get a local copy up and running follow these simple example steps.
 ### Usage
 - Run npm start on your local path to start the web server.
 
+### Tests
+- Run npm install
+- Run npm test
+
 ## Authors
 
 👤 **Henry Nawrocki**
@@ -35,6 +39,12 @@ To get a local copy up and running follow these simple example steps.
 - GitHub: [@hsztan](https://github.com/hsztan)
 - Twitter: [@hsztanski](https://twitter.com/hsztanski)
 - LinkedIn: [henry-nawrocki](https://linkedin.com/in/henry-nawrocki)
+
+👤 **Aaron Keegan**
+
+- GitHub: [@AKeeganDev](https://github.com/AKeeganDev)
+- Twitter: [@AkeeganDev](https://twitter.com/AkeeganDev)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/AKeeganDev)
 
 ## 🤝 Contributing
 

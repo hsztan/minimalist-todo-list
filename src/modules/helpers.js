@@ -188,9 +188,11 @@ const clearAllCompletedTasks = () => {
   tasks.splice(0, tasks.length);
   tasks.push(...uncompletedTasks);
   saveTasksOnLocalStorage();
+  // clearing tasks array because it will be repopulated from local storage in with displayAllTasks
   tasks.splice(0, tasks.length);
   removeAllTasksFromDom();
   displayAllTasks();
+  console.log(tasks);
 };
 
 // ------------- EVENT LISTENERS ---------- //
@@ -225,4 +227,5 @@ module.exports = {
   saveTasksOnLocalStorage,
   removeAllTasksFromDom,
   updateTask,
+  changeTaskStatus,
 };
